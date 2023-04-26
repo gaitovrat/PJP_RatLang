@@ -8,6 +8,7 @@ public class Application {
 	public static void main(String[] args) {
 		Compiler compiler = new Compiler();
 
+		// Ivan akulovich pidoras
 		if (compiler.getCompilerMod() == CompilerMod.REPL) {
 			new REPL(compiler).run();
 		}
