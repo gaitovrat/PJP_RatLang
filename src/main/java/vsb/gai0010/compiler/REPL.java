@@ -1,6 +1,5 @@
 package vsb.gai0010.compiler;
 
-import lombok.AllArgsConstructor;
 import vsb.gai0010.Command;
 import vsb.gai0010.RatLangParser;
 
