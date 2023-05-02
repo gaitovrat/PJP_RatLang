@@ -5,7 +5,7 @@ start
            ;
 
 statement
-           : primitiveType ID (COMMA ID)* SEMI                          # variableDeclaration
+           : primitiveType ID (COMMA ID)* SEMI                 # variableDeclaration
            | READ ID (COMMA ID)* SEMI                          # read
            | WRITE expression (COMMA expression)* SEMI         # write
            | expression SEMI                                   # expressionEval
