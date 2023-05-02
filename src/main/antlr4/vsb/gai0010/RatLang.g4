@@ -5,11 +5,11 @@ start
            ;
 
 statement
-           : TYPE ID (COMMA ID)* SEMI                          # variableDeclaration
+           : primitiveType ID (COMMA ID)* SEMI                          # variableDeclaration
            | READ ID (COMMA ID)* SEMI                          # read
            | WRITE expression (COMMA expression)* SEMI         # write
            | expression SEMI                                   # expressionEval
-           | '{' expression (COMMA expression)* '}'            # block
+           | '{' statement+ '}'                                # block
            | IF '(' expression ')' statement (ELSE statement)? # if
            | WHILE '(' expression ')' statement                # while
            | SEMI                                              # nop
@@ -24,15 +24,19 @@ expression
            | expression op=('=='|'!=') expression             # comparison
            | expression '&&' expression                       # and
            | expression '||' expression                       # or
-           | <assoc=right> ID '=' expression                  # assignment
            | DEC                                              # decValue
            | OCT                                              # octValue
            | HEXA                                             # hexValue
            | FLOAT_VALUE                                      # floatValue
-           | BOOL_VALUE                                       # boolValue
+           | boolValues                                       # boolValue
            | STRING_VALUE                                     # stringValue
+           | ID                                               # idValue
            | '(' expression ')'                               # parentheses
+           | <assoc=right> ID '=' expression                  # assignment
            ;
+
+primitiveType : INT | FLOAT | BOOL | STRING;
+boolValues : TRUE | FALSE;
 
 // Keywords
 INT : 'int';
@@ -46,7 +50,6 @@ ELSE: 'else';
 WHILE : 'while';
 TRUE : 'true';
 FALSE : 'false';
-TYPE : INT | FLOAT | BOOL | STRING;
 
 // Literals
 ID : [a-zA-Z]+ ;
@@ -54,7 +57,6 @@ DEC : [1-9][0-9]* ;
 OCT : '0'[0-7]* ;
 HEXA : '0x'[0-9a-fA-F]+ ;
 FLOAT_VALUE : [0-9]+'.'[0-9]+ ;
-BOOL_VALUE : TRUE | FALSE;
 STRING_VALUE : '"' ( ~[\\"\n\r] | '\\' [\\"] )* '"';
 WS : [ \t\r\n]+ -> skip ;
 
