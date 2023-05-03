@@ -16,23 +16,23 @@ statement
            ;
 
 expression
-           : '-' expression                                   # unary
-           | '!' expression                                   # not
-           | expression op=('*'|'/'|'%') expression           # mul
-           | expression op=('+'|'-'|'.') expression           # add
-           | expression op=('<'|'>') expression               # relation
-           | expression op=('=='|'!=') expression             # comparison
-           | expression '&&' expression                       # and
-           | expression '||' expression                       # or
-           | DEC                                              # decValue
-           | OCT                                              # octValue
-           | HEXA                                             # hexValue
-           | FLOAT_VALUE                                      # floatValue
-           | boolValues                                       # boolValue
-           | STRING_VALUE                                     # stringValue
-           | ID                                               # idValue
-           | '(' expression ')'                               # parentheses
-           | <assoc=right> ID '=' expression                  # assignment
+           : '-' expression                                    # unary
+           | '!' expression                                    # not
+           | expression op=('*'|'/'|'%') expression            # mul
+           | expression op=('+'|'-'|'.') expression            # add
+           | expression op=('<'|'>') expression                # relation
+           | expression op=('=='|'!=') expression              # comparison
+           | expression '&&' expression                        # and
+           | expression '||' expression                        # or
+           | DEC                                               # decValue
+           | OCT                                               # octValue
+           | HEXA                                              # hexValue
+           | FLOAT_VALUE                                       # floatValue
+           | boolValues                                        # boolValue
+           | STRING_VALUE                                      # stringValue
+           | ID                                                # idValue
+           | '(' expression ')'                                # parentheses
+           | <assoc=right> ID '=' expression                   # assignment
            ;
 
 primitiveType : INT | FLOAT | BOOL | STRING;

@@ -5,8 +5,8 @@ import vsb.gai0010.stack.Type;
 
 import java.util.Stack;
 
-public class AddInstruction extends AInstruction {
-    public AddInstruction(Stack<Element> stack) {
+public class SubInstruction extends AInstruction {
+    public SubInstruction(Stack<Element> stack) {
         super(stack);
     }
 
@@ -16,25 +16,25 @@ public class AddInstruction extends AInstruction {
         Element e2 = this.getStack().pop();
 
         if (e1.getType() == Type.BOOLEAN || e2.getType() == Type.BOOLEAN
-            || e1.getType() == Type.STRING || e2.getType() == Type.STRING) {
-            throw new IllegalArgumentException("Unable to add with types boolean or string.");
+                || e1.getType() == Type.STRING || e2.getType() == Type.STRING) {
+            throw new IllegalArgumentException("Unable to sub with types boolean or string.");
         }
 
         if (e1.getType() == Type.FLOAT || e2.getType() == Type.FLOAT) {
             float f1 = (float)e1.getValue();
             float f2 = (float)e2.getValue();
 
-            this.getStack().push(new Element(f1 + f2, Type.FLOAT));
+            this.getStack().push(new Element(f2 - f1, Type.FLOAT));
         } else {
             int i1 = (int)e1.getValue();
             int i2 = (int)e2.getValue();
 
-            this.getStack().push(new Element(i1 + i2, Type.INTEGER));
+            this.getStack().push(new Element(i2 - i1, Type.INTEGER));
         }
     }
 
     @Override
     public String toString() {
-        return "add";
+        return "sub";
     }
 }
