@@ -21,6 +21,10 @@ public class PushInstruction extends AInstruction {
 
     @Override
     public String toString() {
-        return "push " + type + " " + value.toString();
+        String valueString = value.toString();
+        if (value instanceof String) {
+            valueString = valueString.replace("\n", "\\n");
+        }
+        return "push " + type + " " + valueString;
     }
 }
