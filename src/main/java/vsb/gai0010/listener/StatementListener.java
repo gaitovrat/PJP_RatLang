@@ -188,6 +188,7 @@ public class StatementListener extends RatLangBaseListener {
 
     @Override
     public void enterElse_(RatLangParser.Else_Context ctx) {
+        this.machine.getInstructions().add(new JmpInstruction(this.machine, String.valueOf(id + 1)));
         this.addLabel();
     }
 
