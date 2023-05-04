@@ -66,7 +66,8 @@ public class StatementListener extends RatLangBaseListener {
     @Override
     public void exitWrite(RatLangParser.WriteContext ctx) {
         int size = ctx.expression().size();
-        this.machine.getInstructions().add(new PrintInstruction(this.machine, size));
+        this.machine.getInstructions().add(new PushInstruction(machine, "\n", Type.STRING.getId()));
+        this.machine.getInstructions().add(new PrintInstruction(this.machine, size + 1));
     }
 
     @Override

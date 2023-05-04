@@ -24,7 +24,7 @@ public class PrintInstruction extends AInstruction {
         Collections.reverse(objects);
 
         for (Object object : objects) {
-            System.out.println(object.toString());
+            System.out.print(object.toString());
         }
     }
 
