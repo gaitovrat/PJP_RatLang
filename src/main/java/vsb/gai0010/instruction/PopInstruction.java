@@ -1,17 +1,18 @@
 package vsb.gai0010.instruction;
 
-import vsb.gai0010.stack.Element;
-
-import java.util.Stack;
+import vsb.gai0010.RMachine;
 
 public class PopInstruction extends AInstruction {
-    public PopInstruction(Stack<Element> stack) {
-        super(stack);
+    public PopInstruction(RMachine machine) {
+        super(machine);
     }
 
     @Override
     public void execute() {
-        this.getStack().pop();
+        if (this.getMachine().getStack().empty()) {
+            return;
+        }
+        this.getMachine().getStack().pop();
     }
 
     @Override

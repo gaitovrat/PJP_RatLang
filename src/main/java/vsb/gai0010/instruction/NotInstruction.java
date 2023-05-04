@@ -1,25 +1,24 @@
 package vsb.gai0010.instruction;
 
+import vsb.gai0010.RMachine;
 import vsb.gai0010.stack.Element;
 import vsb.gai0010.stack.Type;
 
-import java.util.Stack;
-
 public class NotInstruction extends AInstruction {
-    public NotInstruction(Stack<Element> stack) {
-        super(stack);
+    public NotInstruction(RMachine machine) {
+        super(machine);
     }
 
     @Override
     public void execute() {
-        Element e = this.getStack().pop();
+        Element e = this.getMachine().getStack().pop();
 
         if (e.getType() != Type.BOOLEAN) {
             throw new IllegalArgumentException("Unable to not with types int or float or string.");
         }
 
         boolean value = (boolean) e.getValue();
-        this.getStack().push(new Element(!value, Type.BOOLEAN));
+        this.getMachine().getStack().push(new Element(!value, Type.BOOLEAN));
     }
 
     @Override

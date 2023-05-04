@@ -10,8 +10,8 @@ statement
            | WRITE expression (COMMA expression)* SEMI         # write
            | expression SEMI                                   # expressionEval
            | '{' statement+ '}'                                # block
-           | IF '(' expression ')' statement (ELSE statement)? # if
-           | WHILE '(' expression ')' statement                # while
+           | IF '(' condition ')' statement (else_)? # if
+           | WHILE '(' condition ')' statement                # while
            | SEMI                                              # nop
            ;
 
@@ -35,6 +35,8 @@ expression
            | <assoc=right> ID '=' expression                   # assignment
            ;
 
+condition: expression;
+else_: ELSE statement;
 primitiveType : INT | FLOAT | BOOL | STRING;
 boolValues : TRUE | FALSE;
 

@@ -1,18 +1,17 @@
 package vsb.gai0010.instruction;
 
+import vsb.gai0010.RMachine;
 import vsb.gai0010.stack.Element;
 import vsb.gai0010.stack.Type;
 
-import java.util.Stack;
-
 public class UminusInstruction extends AInstruction {
-    public UminusInstruction(Stack<Element> stack) {
-        super(stack);
+    public UminusInstruction(RMachine machine) {
+        super(machine);
     }
 
     @Override
     public void execute() {
-        Element e = this.getStack().pop();
+        Element e = this.getMachine().getStack().pop();
 
         if (e.getType() == Type.BOOLEAN || e.getType() == Type.STRING) {
             throw new IllegalArgumentException("Unable to uminus with types boolean or string.");
@@ -27,7 +26,7 @@ public class UminusInstruction extends AInstruction {
             eNew.setValue(-value);
         }
 
-        this.getStack().push(eNew);
+        this.getMachine().getStack().push(eNew);
     }
 
     @Override

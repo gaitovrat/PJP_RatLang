@@ -1,19 +1,18 @@
 package vsb.gai0010.instruction;
 
+import vsb.gai0010.RMachine;
 import vsb.gai0010.stack.Element;
 import vsb.gai0010.stack.Type;
 
-import java.util.Stack;
-
 public class GtInstruction extends AInstruction {
-    public GtInstruction(Stack<Element> stack) {
-        super(stack);
+    public GtInstruction(RMachine machine) {
+        super(machine);
     }
 
     @Override
     public void execute() {
-        Element e1 = this.getStack().pop();
-        Element e2 = this.getStack().pop();
+        Element e1 = this.getMachine().getStack().pop();
+        Element e2 = this.getMachine().getStack().pop();
 
         if (e1.getType() == Type.STRING || e2.getType() == Type.STRING
                 || e1.getType() == Type.BOOLEAN || e2.getType() == Type.BOOLEAN) {
@@ -35,7 +34,7 @@ public class GtInstruction extends AInstruction {
         }
         eNew.setValue(value);
 
-        this.getStack().push(eNew);
+        this.getMachine().getStack().push(eNew);
     }
 
     @Override

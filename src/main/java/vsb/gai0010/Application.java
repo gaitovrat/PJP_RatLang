@@ -14,7 +14,7 @@ public class Application {
 
 		try {
 			RMachine machine = new RMachine(Paths.get(args[0]));
-			machine.parse();
+			machine.compile();
 			machine.printInstructions();
 			machine.execute();
 		} catch (IOException e) {

@@ -1,6 +1,7 @@
 package vsb.gai0010;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -15,10 +16,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class RMachine {
     private final StatementListener listener;
@@ -27,6 +25,13 @@ public class RMachine {
     private final Stack<Element> stack;
     @Getter
     private final List<IInstruction> instructions;
+    @Getter
+    private final Map<String, Integer> labels;
+    @Getter
+    private final Map<String, Element> ids;
+    @Getter
+    @Setter
+    private int pc;
 
     public RMachine(Path input) throws IOException {
         String content = Files.readString(input);
@@ -40,9 +45,12 @@ public class RMachine {
         this.listener = new StatementListener(this);
         this.stack = new Stack<>();
         this.instructions = new ArrayList<>();
+        this.labels = new HashMap<>();
+        this.ids = new HashMap<>();
+        this.pc = 0;
     }
 
-    public void parse() throws SyntaxException {
+    public void compile() throws SyntaxException {
         if (parser.getNumberOfSyntaxErrors() != 0) {
             throw new SyntaxException();
         }
@@ -62,8 +70,8 @@ public class RMachine {
     }
 
     public void execute() {
-        for (IInstruction instruction : instructions) {
-            instruction.execute();
+        for (; pc < instructions.size(); pc++) {
+            this.instructions.get(pc).execute();
         }
     }
 }
