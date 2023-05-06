@@ -54,7 +54,7 @@ TRUE : 'true';
 FALSE : 'false';
 
 // Literals
-ID : [a-zA-Z]+ ;
+ID : [a-zA-Z][a-zA-Z0-9]* ;
 DEC : [1-9][0-9]* ;
 OCT : '0'[0-7]* ;
 HEXA : '0x'[0-9a-fA-F]+ ;
