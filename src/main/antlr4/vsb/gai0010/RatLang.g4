@@ -10,8 +10,8 @@ statement
            | WRITE expression (COMMA expression)* SEMI         # write
            | expression SEMI                                   # expressionEval
            | '{' statement+ '}'                                # block
-           | IF '(' condition ')' statement (else_)? # if
-           | WHILE '(' condition ')' statement                # while
+           | IF '(' condition ')' statement (else_)?           # if
+           | WHILE '(' condition ')' statement                 # while
            | SEMI                                              # nop
            ;
 
