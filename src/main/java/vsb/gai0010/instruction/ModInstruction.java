@@ -23,12 +23,12 @@ public class ModInstruction extends AInstruction {
             float f1 = (float)e1.getValue();
             float f2 = (float)e2.getValue();
 
-            this.getMachine().getStack().push(new Element(f2 / f1, Type.FLOAT));
+            this.getMachine().getStack().push(new Element(f2 % f1, Type.FLOAT));
         } else {
             int i1 = (int)e1.getValue();
             int i2 = (int)e2.getValue();
 
-            this.getMachine().getStack().push(new Element(i2 / i1, Type.INTEGER));
+            this.getMachine().getStack().push(new Element(i2 % i1, Type.INTEGER));
         }
     }
 
