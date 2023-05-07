@@ -1,5 +1,7 @@
 package vsb.gai0010.listener;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import vsb.gai0010.RMachine;
 import vsb.gai0010.RatLangBaseListener;
@@ -9,6 +11,7 @@ import vsb.gai0010.stack.Element;
 import vsb.gai0010.stack.Type;
 
 import java.util.List;
+import java.util.Stack;
 
 public class StatementListener extends RatLangBaseListener {
     private long id;
@@ -23,6 +26,26 @@ public class StatementListener extends RatLangBaseListener {
     public void exitDecValue(RatLangParser.DecValueContext ctx) {
         int i = Integer.parseInt(ctx.DEC().toString());
         this.machine.getInstructions().add(new PushInstruction(this.machine, i, Type.INTEGER.getId()));
+
+        checkTypes(ctx);
+    }
+
+    private void checkTypes(ParserRuleContext ctx) {
+        if (ctx.parent instanceof RatLangParser.ExpressionContext parentContext) {
+            Stack<ParseTree> children = new Stack<>();
+            children.addAll(parentContext.children);
+
+            while (!children.empty()) {
+                ParseTree child = children.pop();
+                if (child instanceof RatLangParser.FloatValueContext) {
+                    this.machine.getInstructions().add(new ItofInstruction(this.machine));
+                    break;
+                }
+                if (child instanceof ParserRuleContext childContext) {
+                    children.addAll(childContext.children);
+                }
+            }
+        }
     }
 
     @Override
@@ -30,6 +53,8 @@ public class StatementListener extends RatLangBaseListener {
         String hexString = ctx.HEXA().toString();
         int number = Integer.parseInt(hexString.replace("0x", ""), 16);
         this.machine.getInstructions().add(new PushInstruction(this.machine, number, Type.INTEGER.getId()));
+
+        checkTypes(ctx);
     }
 
     @Override
@@ -49,6 +74,8 @@ public class StatementListener extends RatLangBaseListener {
     public void exitOctValue(RatLangParser.OctValueContext ctx) {
         int number = Integer.parseInt(ctx.OCT().toString(), 8);
         this.machine.getInstructions().add(new PushInstruction(this.machine, number, Type.INTEGER.getId()));
+
+        checkTypes(ctx);
     }
 
     @Override
@@ -145,7 +172,12 @@ public class StatementListener extends RatLangBaseListener {
     @Override
     public void exitAssignment(RatLangParser.AssignmentContext ctx) {
         String id = ctx.ID().toString();
+
         this.machine.getInstructions().add(new SaveInstruction(this.machine, id));
+        if (ctx.parent instanceof RatLangParser.AssignmentContext) {
+            this.machine.getInstructions().add(new LoadInstruction(this.machine, id));
+        }
+
     }
 
     @Override

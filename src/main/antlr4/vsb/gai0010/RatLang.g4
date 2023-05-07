@@ -61,7 +61,7 @@ HEXA : '0x'[0-9a-fA-F]+ ;
 FLOAT_VALUE : [0-9]+'.'[0-9]+ ;
 STRING_VALUE : '"' ( ~[\\"\n\r] | '\\' [\\"] )* '"';
 WS : [ \t\r\n]+ -> skip ;
-COMMENT : '#' ~[\r\n]* -> skip;
+COMMENT : '//' ~[\r\n]* -> skip;
 
 SEMI: ';';
 COMMA: ',';

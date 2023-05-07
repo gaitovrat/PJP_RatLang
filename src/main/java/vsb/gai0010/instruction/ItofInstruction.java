@@ -17,7 +17,7 @@ public class ItofInstruction extends AInstruction {
             throw new IllegalArgumentException("Unable to itof with types float or string or boolean.");
         }
 
-        Element elementNew = new Element(element.getValue(), Type.FLOAT);
+        Element elementNew = new Element(((Integer)element.getValue()).floatValue(), Type.FLOAT);
         this.getMachine().getStack().push(elementNew);
     }
 
